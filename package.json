@@ -1,0 +1,15 @@
+{
+  "name": "physio-healthwise",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "HealthWise multi-branch physiotherapy clinic application",
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "mysql2": "^3.24.6"
+  }
+}

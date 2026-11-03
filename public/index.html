@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HealthWise Physiotherapy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/assets/css/index.css" />
+    <link rel="stylesheet" href="/assets/css/healthwise.css?v=5" />
+    <script>
+      (function () {
+        var saved = localStorage.getItem("clinexa-theme");
+        var prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (saved ? saved === "dark" : prefersDark) document.documentElement.classList.add("dark");
+      })();
+    </script>
+    <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+  </head>
+  <body class="bg-bg text-heading antialiased">
+    <div id="login-screen" class="hw-login">
+      <aside class="hw-login-aside">
+        <div>
+          <div class="hw-mark" style="background:#fff;color:#0f3d3b">H</div>
+          <h1 style="margin-top:28px">HealthWise</h1>
+          <p style="margin-top:12px;color:#d1fae5;max-width:280px">Multi-branch physiotherapy operations for reception, clinicians and patients.</p>
+        </div>
+        <p style="font-size:12px;color:#99f6e4">Synthetic clinic data only. Local demo sign-in, not a production authenticator.</p>
+      </aside>
+      <button id="login-theme" class="hw-btn theme-float" type="button" aria-label="Toggle color theme"><i id="login-theme-icon" class="ph ph-moon"></i></button>
+      <main class="hw-login-main">
+        <div class="hw-login-card dash-panel pad">
+          <div class="hw-row" style="margin-bottom:14px">
+            <button type="button" class="hw-btn hw-btn-primary" id="tab-staff">Clinic staff</button>
+            <button type="button" class="hw-btn" id="tab-patient">Patient</button>
+          </div>
+          <form id="staff-form">
+            <div class="hw-field">
+              <label class="hw-label" for="email">Work email</label>
+              <input class="hw-input" id="email" name="email" type="email" autocomplete="username" required value="leela.reception@healthwise.local" />
+            </div>
+            <div class="hw-field">
+              <label class="hw-label" for="password">Password</label>
+              <input class="hw-input" id="password" name="password" type="password" autocomplete="current-password" required value="HealthWise#2026" />
+            </div>
+            <div class="hw-field" id="mfa-field" hidden>
+              <label class="hw-label" for="mfa">Authenticator code</label>
+              <input class="hw-input" id="mfa" inputmode="numeric" autocomplete="one-time-code" placeholder="246810" />
+              <p class="hw-muted" style="margin-top:6px">Local demo code: 246810</p>
+            </div>
+            <button class="hw-btn hw-btn-primary" type="submit" style="width:100%">Continue</button>
+            <p id="staff-error" class="hw-error" hidden></p>
+            <div class="hw-demo-grid" id="demo-accounts"></div>
+          </form>
+          <form id="patient-form" hidden>
+            <div class="hw-field">
+              <label class="hw-label" for="phone">Mobile number</label>
+              <input class="hw-input" id="phone" inputmode="numeric" value="9845012345" />
+            </div>
+            <div class="hw-field" id="otp-field" hidden>
+              <label class="hw-label" for="otp">One-time code</label>
+              <input class="hw-input" id="otp" inputmode="numeric" placeholder="482910" />
+              <p class="hw-muted" style="margin-top:6px">Local demo code: 482910</p>
+            </div>
+            <div id="profile-picker" class="hw-picker" hidden></div>
+            <button class="hw-btn hw-btn-primary" type="submit" style="width:100%">Continue</button>
+            <p id="patient-error" class="hw-error" hidden></p>
+            <p class="hw-muted" style="margin-top:10px">9845012345 is shared by Ananya Rao and Rohan Rao. The clinic will ask which profile you are.</p>
+          </form>
+        </div>
+      </main>
+    </div>
+
+    <div id="app" hidden>
+      <div id="hw-overlay" class="hw-overlay"></div>
+      <aside id="sidebar" class="fixed top-0 left-0 z-40 h-full w-64 bg-white/80 backdrop-blur-xl border-r border-border hidden lg:flex flex-col">
+        <div class="h-16 flex items-center px-4 border-b border-border-subtle gap-3">
+          <div class="hw-mark">H</div>
+          <span class="nav-text flex flex-col leading-none">
+            <span class="font-bold text-lg">HealthWise</span>
+            <span class="text-[10px] font-medium text-faint tracking-wide">Physiotherapy</span>
+          </span>
+        </div>
+        <nav id="sidenav" class="flex-1 overflow-y-auto py-3 px-3 space-y-1"></nav>
+        <div class="px-4 py-3 border-t border-border-subtle text-[11px] text-faint">Branch-scoped clinic desk</div>
+      </aside>
+      <header id="topbar" class="fixed top-0 right-0 z-30 h-16 bg-w1/80 backdrop-blur-xl border-b border-border-subtle left-0 lg:left-64">
+        <div class="flex items-center justify-between h-full gap-2 px-4 lg:px-6">
+          <div class="flex items-center gap-2 min-w-0">
+            <button id="sidebar-toggle" class="topbar-icon-btn flex w-10 h-10" type="button" aria-label="Open menu"><i class="ph ph-list text-xl"></i></button>
+            <div class="topbar-search relative hidden md:flex items-center w-64 xl:w-80 h-10 px-3 rounded-xl bg-subtle">
+              <i class="ph ph-magnifying-glass text-faint"></i>
+              <input id="global-search" class="flex-1 min-w-0 h-full bg-transparent px-2 text-sm focus:outline-none" placeholder="Search name, code or phone" />
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <span id="online-badge" class="hw-chip is-done">Online</span>
+            <button id="theme-toggle" class="topbar-icon-btn flex w-10 h-10" type="button" aria-label="Toggle color theme"><i id="theme-icon" class="ph ph-moon text-xl"></i></button>
+            <div id="branch-slot" class="hw-branch hidden md:block"></div>
+            <div class="text-right leading-tight hidden sm:block">
+              <p id="who-name" class="text-sm font-semibold"></p>
+              <p id="who-role" class="text-[11px] text-muted"></p>
+            </div>
+            <button id="logout-btn" class="hw-btn hw-btn-ghost" type="button">Sign out</button>
+          </div>
+        </div>
+      </header>
+      <main id="main-content" class="pt-16 ml-0 lg:ml-64">
+        <div id="stale-banner" class="hw-banner" style="margin:12px 16px 0" hidden></div>
+        <div id="viewing-as" class="hw-banner is-info" style="margin:12px 16px 0" hidden></div>
+        <div id="view" class="p-3 sm:p-4 lg:p-5"></div>
+      </main>
+    </div>
+    <div id="modal-root"></div>
+    <div id="toast" class="hw-toast" hidden></div>
+    <script type="module" src="/js/app.js?v=12"></script>
+  </body>
+</html>

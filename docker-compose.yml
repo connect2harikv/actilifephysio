@@ -1,0 +1,43 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: physio-mysql
+    environment:
+      MYSQL_DATABASE: healthwise
+      MYSQL_USER: healthwise
+      MYSQL_PASSWORD: healthwise_local
+      MYSQL_ROOT_PASSWORD: healthwise_root
+    volumes:
+      - healthwise-mysql:/var/lib/mysql
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uhealthwise", "-phealthwise_local"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+    restart: unless-stopped
+
+  healthwise:
+    build: .
+    container_name: physio-healthwise
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: "8080"
+      DEMO_MFA_CODE: "246810"
+      DEMO_OTP_CODE: "482910"
+      DATA_FILE: "/app/data/state.json"
+      DATABASE_URL: "mysql://healthwise:healthwise_local@mysql:3306/healthwise"
+    volumes:
+      - healthwise-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  healthwise-data:
+  healthwise-mysql:
